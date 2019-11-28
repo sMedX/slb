@@ -1,0 +1,42 @@
+# Default configuration file
+app_name: 'SLB_Task2'
+pandas_copy_warning: True
+
+attributes:
+  WETTED_MATERIAL:
+    MATERIAL:
+      type: 'str'
+      rule: 'ia_df.WETTED_MATERIAL.MATERIAL == x'
+      values: ['9CR', '41XX', '13CR', '9CR-1MO', '25CR']
+      name: 'ACTIVE FLOW WETTED MATERIAL'
+    STRENGTH:
+      type: 'float'
+      rule: 'ia_df.WETTED_MATERIAL.STRENGTH <= x'
+      min: 80
+      max: 110
+      name: 'YIELD STRENGTH (KSI)'
+    description: 'Component comes in direct contact with the dynamic movement of well fluids'
+  CASING_SIZE:
+    value:
+      type: 'float'
+      rule: 'ia_df.CASING_SIZE.value <= x'
+      min: 4.5
+      max: 10.75
+      name: 'CASING SIZE (IN)'
+    description: 'Nominal completion casing size' 
+  WEIGHT_RANGE:
+    MAX:
+      type: 'float'
+      rule: 'ia_df.WEIGHT_RANGE.MAX >= x'
+      min: 13.5
+      max: 65.7
+      name: 'CASING WEIGHT RANGE (PPF) - MAX'
+    MIN:
+      type: 'float'
+      rule: 'ia_df.WEIGHT_RANGE.MIN <= x'
+      min: 9.5
+      max: 47
+      name: 'CASING WEIGHT RANGE (PPF) - MIN'
+    description: 'Nominal completion casing weights'
+    
+    
