@@ -13,6 +13,26 @@ async def get_attributes_handler(request: Request) -> Response:
 
     ia_df = request.app['data']['ia_df']
 
+    reverse_rename = {'WETTED_MATERIAL': 'ACTIVE FLOW WETTED MATERIAL - YIELD STRENGTH (KSI)',
+                      'CASING_SIZE': 'CASING SIZE (IN)',
+                      'WEIGHT_RANGE': 'CASING WEIGHT RANGE (PPF)',
+                      'CERTIFICATION': 'CERTIFICATION STATUS',
+                      'PRESSURE_RATING': 'DIFFERENTIAL PRESSURE RATING (PSI)',
+                      'EXTERNAL_PRESSURE': 'EXTERNAL WORKING PRESSURE (PSI) - EOEC AT SPECIFIED TEMP (F)',
+                      'ID_DRIFT': 'I.D. - DRIFT (IN)',
+                      'INTERNAL_PRESSURE': 'INTERNAL WORKING PRESSURE (PSI) - EOEC AT SPECIFIED TEMP (F)',
+                      'LOWER_THREAD': 'LOWER THREAD CONNECTING - SIZE (IN), WT (PPF), TYPE, CONFIG',
+                      'MATERIAL_ELEMENTS': 'MATERIAL/ELEMENTS',
+                      'MATERIAL_O_RING': 'MATERIAL/O-RING(S)',
+                      'OD_MAX': 'O.D. - MAX. (IN)',
+                      'QCG': 'QUALITY CONTROL GRADE',
+                      'QCP': 'QUALITY CONTROL PLAN - QCP',
+                      'SERVICE_NACE': 'SERVICE NACE (YES/NO)',
+                      'SETTING_PRESSURE': 'SETTING DIFFERENTIAL PRESSURE - RECOMMENDED (MIN)(PSI)',
+                      'RELEASE_FORCE': 'SHEAR RELEASE FORCE (LB)',
+                      'TENSILE_STRENGTH': 'TENSILE STRENGTH (LBS) - EOEC AT SPECIFIED TEMP (F)',
+                      'UPPER_THREAD': 'UPPER THREAD CONNECTING - SIZE (IN), WT (PPF), TYPE, CONFIG'}
+
     result = {}
 
     for col in ia_df.columns:
@@ -22,6 +42,7 @@ async def get_attributes_handler(request: Request) -> Response:
             result[main_col] = {}
 
         result[main_col][sub_col] = {}
+        result[main_col]['name'] = reverse_rename[main_col]
 
         if ia_df[col].dtype == 'object':
             result[main_col][sub_col]['type'] = 'string'
