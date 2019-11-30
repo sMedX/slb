@@ -12,6 +12,7 @@ pandas = "*"
 numpy = "*"
 aiohttp = "*"
 aiohttp_cors = "*"
+simplejson = "*"
 
 [requires]
 python_version = "3.7"

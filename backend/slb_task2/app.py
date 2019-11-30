@@ -10,17 +10,14 @@ from slb_task2.routes import setup_routes
 import pandas as pd
 import os
 import logging
+from functools import partial
+import simplejson
 
 
 def get_data():
     result = {}
-
     ia_df = pd.read_pickle(os.path.join(os.pardir, 'slb_data', 'ia_df.pkl'))
-    ia_descr_df = pd.read_pickle(os.path.join(os.pardir, 'slb_data', 'ia_descr_df.pkl'))
-
     result['ia_df'] = ia_df
-    result['ia_descr_df'] = ia_descr_df
-
     return result
 
 
@@ -38,6 +35,7 @@ async def create_app(config: Dict) -> Application:
 
     setup_logger(config['log'], config['filelog'])
     app['data'] = get_data()
+    app['dumps'] = partial(simplejson.dumps, ignore_nan=True)
     setup_routes(app)
 
     return app

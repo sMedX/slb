@@ -1,42 +1,250 @@
-# Default configuration file
-app_name: 'SLB_Task2'
-pandas_copy_warning: True
-
+app_name: SLB_task2
 attributes:
-  WETTED_MATERIAL:
-    MATERIAL:
-      type: 'str'
-      rule: 'ia_df.WETTED_MATERIAL.MATERIAL == x'
-      values: ['9CR', '41XX', '13CR', '9CR-1MO', '25CR']
-      name: 'ACTIVE FLOW WETTED MATERIAL'
-    STRENGTH:
-      type: 'float'
-      rule: 'ia_df.WETTED_MATERIAL.STRENGTH <= x'
-      min: 80
-      max: 110
-      name: 'YIELD STRENGTH (KSI)'
-    description: 'Component comes in direct contact with the dynamic movement of well fluids'
   CASING_SIZE:
+    description: Nominal completion casing size
+    name: CASING SIZE (IN)
     value:
-      type: 'float'
-      rule: 'ia_df.CASING_SIZE.value <= x'
-      min: 4.5
       max: 10.75
-      name: 'CASING SIZE (IN)'
-    description: 'Nominal completion casing size' 
+      min: 4.5
+      rule: ia_df.CASING_SIZE.value<=x
+      type: float64
+  CERTIFICATION:
+    description: ISO 14310 V6~V0 design validation grade for packers
+    name: CERTIFICATION STATUS
+    value:
+      rule: ia_df.CERTIFICATION.value==x
+      type: string
+      values:
+      - ISO-V3[150-325F]
+      - ISO-V3[150-325F, 40-235F]
+      - ISO-V3[40-235F, 150-325F]
+      - ISO-V6[AMBIENT]
+      - ISO-V1[150-325F]
+      - ISO-V3[40-195F]
+      - ISO-V3[150-350F]
+      - nan
+  EXTERNAL_PRESSURE:
+    PRESSURE:
+      max: 6000.0
+      min: 5000.0
+      rule: ia_df.EXTERNAL_PRESSURE.PRESSURE>=x
+      type: float64
+    TEMP:
+      max: 350.0
+      min: 0.0
+      rule: ia_df.EXTERNAL_PRESSURE.TEMP>=x
+      type: float64
+    description: Max. allowable external pressure of the product at a specified temp.
+      and excluding threaded end connections
+    name: EXTERNAL WORKING PRESSURE (PSI) - EOEC AT SPECIFIED TEMP (F)
+  ID_DRIFT:
+    description: Drift ID using standard API tubing drift
+    name: I.D. - DRIFT (IN)
+    value:
+      max: 4.767
+      min: 1.901
+      rule: ia_df.ID_DRIFT.value<=x
+      type: float64
+  INTERNAL_PRESSURE:
+    PRESSURE:
+      max: 7500.0
+      min: 5000.0
+      rule: ia_df.INTERNAL_PRESSURE.PRESSURE>=x
+      type: float64
+    TEMP:
+      max: 350.0
+      min: 0.0
+      rule: ia_df.INTERNAL_PRESSURE.TEMP>=x
+      type: float64
+    description: Max. allowable internal pressure of the product at a specified temp.
+      and excluding threaded end connections
+    name: INTERNAL WORKING PRESSURE (PSI) - EOEC AT SPECIFIED TEMP (F)
+  LOWER_THREAD:
+    CONFIG:
+      rule: ia_df.LOWER_THREAD.CONFIG==x
+      type: string
+      values:
+      - PIN
+    SIZE:
+      max: 5.5
+      min: 2.375
+      rule: ia_df.LOWER_THREAD.SIZE<=x
+      type: float64
+    TYPE:
+      rule: ia_df.LOWER_THREAD.TYPE==x
+      type: string
+      values:
+      - STUB ACME
+      - EUE
+      - LTC
+      - VAM TOP
+      - FOX
+      - NEW VAM
+      - JFE BEAR
+      - VAM 21
+      - TENARIS HYDRIL BLUE
+    WT:
+      max: 20.0
+      min: 4.6
+      rule: ia_df.LOWER_THREAD.WT<=x
+      type: float64
+    description: Thread connecion at the bottom of packer
+    name: LOWER THREAD CONNECTING - SIZE (IN), WT (PPF), TYPE, CONFIG
+  MATERIAL_ELEMENTS:
+    description: Element compound
+    name: MATERIAL/ELEMENTS
+    value:
+      rule: ia_df.MATERIAL_ELEMENTS.value==x
+      type: string
+      values:
+      - HNBR
+      - AFLAS
+      - nan
+  MATERIAL_O_RING:
+    description: O-ring compound
+    name: MATERIAL/O-RING(S)
+    value:
+      rule: ia_df.MATERIAL_O_RING.value==x
+      type: string
+      values:
+      - VITON
+      - HNBR
+  OD_MAX:
+    description: OD of the largest metal component of a packer
+    name: O.D. - MAX. (IN)
+    value:
+      max: 9.344
+      min: 3.75
+      rule: ia_df.OD_MAX.value<=x
+      type: float64
+  PRESSURE_RATING:
+    description: The maxium differential pressure across the element
+    name: DIFFERENTIAL PRESSURE RATING (PSI)
+    value:
+      max: 6000.0
+      min: 5000.0
+      rule: ia_df.PRESSURE_RATING.value>=x
+      type: float64
+  QCG:
+    description: 3 different grade defined per API 11D1
+    name: QUALITY CONTROL GRADE
+    value:
+      rule: ia_df.QCG.value==x
+      type: string
+      values:
+      - Q3
+      - nan
+  QCP:
+    description: Customer quality control plan
+    name: QUALITY CONTROL PLAN - QCP
+    value:
+      rule: ia_df.QCP.value==x
+      type: string
+      values:
+      - QCP-101792794
+      - CLG QCP-102817386
+      - CLQ QCP-102817386
+  RELEASE_FORCE:
+    description: Nominal shear force required to activiate release mechanism on a
+      packer
+    name: SHEAR RELEASE FORCE (LB)
+    value:
+      max: 129740.0
+      min: 77844.0
+      rule: ia_df.RELEASE_FORCE.value<=x
+      type: float64
+  SERVICE_NACE:
+    description: If a packer type 1 components are manufactured from material that
+      complying NACE MR0175 requirement
+    name: SERVICE NACE (YES/NO)
+    value:
+      rule: ia_df.SERVICE_NACE.value==x
+      type: bool
+      values:
+      - 'True'
+      - 'False'
+  SETTING_PRESSURE:
+    description: Mini. differential pressure to set a packer
+    name: SETTING DIFFERENTIAL PRESSURE - RECOMMENDED (MIN)(PSI)
+    value:
+      max: 3000.0
+      min: 2400.0
+      rule: ia_df.SETTING_PRESSURE.value>=x
+      type: float64
+  TENSILE_STRENGTH:
+    STRENGTH:
+      max: 408300.0
+      min: 101000.0
+      rule: ia_df.TENSILE_STRENGTH.STRENGTH>=x
+      type: float64
+    TEMP:
+      max: 350.0
+      min: 0.0
+      rule: ia_df.TENSILE_STRENGTH.TEMP>=x
+      type: float64
+    description: The Max. tension that can be pulled into a packer
+    name: TENSILE STRENGTH (LBS) - EOEC AT SPECIFIED TEMP (F)
+  UPPER_THREAD:
+    CONFIG:
+      rule: ia_df.UPPER_THREAD.CONFIG==x
+      type: string
+      values:
+      - PIN
+      - BOX
+    SIZE:
+      max: 5.5
+      min: 2.375
+      rule: ia_df.UPPER_THREAD.SIZE<=x
+      type: float64
+    TYPE:
+      rule: ia_df.UPPER_THREAD.TYPE==x
+      type: string
+      values:
+      - STUB ACME
+      - EUE
+      - LTC
+      - MODIFIED EUE
+      - VAM TOP
+      - FOX
+      - NEW VAM
+      - JFE BEAR
+      - VAM 21
+      - TENARIS HYDRIL BLUE
+    WT:
+      max: 20.0
+      min: 4.6
+      rule: ia_df.UPPER_THREAD.WT<=x
+      type: float64
+    description: Thread connecion at the top of packer
+    name: UPPER THREAD CONNECTING - SIZE (IN), WT (PPF), TYPE, CONFIG
   WEIGHT_RANGE:
     MAX:
-      type: 'float'
-      rule: 'ia_df.WEIGHT_RANGE.MAX >= x'
-      min: 13.5
       max: 65.7
-      name: 'CASING WEIGHT RANGE (PPF) - MAX'
+      min: 13.5
+      rule: ia_df.WEIGHT_RANGE.MAX<=x
+      type: float64
     MIN:
-      type: 'float'
-      rule: 'ia_df.WEIGHT_RANGE.MIN <= x'
+      max: 47.0
       min: 9.5
-      max: 47
-      name: 'CASING WEIGHT RANGE (PPF) - MIN'
-    description: 'Nominal completion casing weights'
-    
-    
+      rule: ia_df.WEIGHT_RANGE.MIN>=x
+      type: float64
+    description: Nominal completion casing weights
+    name: CASING WEIGHT RANGE (PPF)
+  WETTED_MATERIAL:
+    MATERIAL:
+      rule: ia_df.WETTED_MATERIAL.MATERIAL==x
+      type: string
+      values:
+      - 9CR
+      - 41XX
+      - 13CR
+      - 9CR-1MO
+      - 25CR
+    STRENGTH:
+      max: 110.0
+      min: 80.0
+      rule: ia_df.WETTED_MATERIAL.STRENGTH>=x
+      type: float64
+    description: Component comes in direct contact with the dynamic movement of well
+      fluids
+    name: ACTIVE FLOW WETTED MATERIAL - YIELD STRENGTH (KSI)
