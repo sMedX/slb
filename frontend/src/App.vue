@@ -2,12 +2,10 @@
   <v-app>
     <v-app-bar
       app
-      color="primary"
+      color="white"
       dark
     >
-      <div class="d-flex align-center">
-        <span class="mr-2 title">Schlumberger</span>
-      </div>
+      <img :src="require('./assets/logo.png')" />
     </v-app-bar>
 
     <v-content>
@@ -15,6 +13,12 @@
     </v-content>
   </v-app>
 </template>
+
+<style lang="scss" scoped>
+img {
+  height: 50px;
+}
+</style>
 
 <script lang="ts">
 import Vue from 'vue';

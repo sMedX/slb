@@ -65,7 +65,7 @@ export default new Vuex.Store({
       let results = new Array<any>();
 
       for (const name in payload.full_match) {
-        const element = payload[name];
+        const element = payload.full_match[name];
         results.push({
           name,
           ...element
@@ -76,10 +76,22 @@ export default new Vuex.Store({
       results = new Array<any>();
 
       for (const name in payload.other_match) {
-        const element = payload[name];
+        const element = payload.other_match[name];
+        const flags = payload.other_match_flag[name];
+        let match = 0;
+
+        if (flags) {
+          const keys = Object.keys(flags);
+          match = keys.reduce((acc, key) => {
+            if (flags[key]) acc++;
+            return acc;
+          }, 0) / keys.length;
+        }
+
         results.push({
           name,
-          ...element
+          ...element,
+          __match: match * 100
         });
       }
 
