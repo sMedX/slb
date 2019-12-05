@@ -23,7 +23,7 @@
                           height="100"
                           @click
                         >
-                          <v-img :aspect-ratio="1" :height="100" :src="getRandomImage()"></v-img>
+                          <v-img :aspect-ratio="1" :height="100" :width="100" :max-width="100" :max-height="100" :src="getRandomImage(index)"></v-img>
                           <v-card-title>{{item.name}}</v-card-title>
                         </v-card>
                       </v-col>
@@ -50,7 +50,7 @@
                           height="100"
                           @click
                         >
-                          <v-img :aspect-ratio="1" :height="100" :src="getRandomImage()"></v-img>
+                          <v-img :aspect-ratio="1" :height="100" :width="100" :max-width="100" :max-height="100" :src="getRandomImage(index)"></v-img>
                           <v-card-title class="no-flex">
                             <div>{{item.name}}</div>
                             <v-chip>Match: {{item.__match}}%</v-chip>
@@ -178,9 +178,10 @@ export default {
 
       this.LOAD_FILTERED_PACKERS(params);
     },
-    getRandomImage() {
-      const index = Math.random() * (images.length - 1);
-      return images[index ^ 0];
+    getRandomImage(i) {
+      //const index = Math.random() * (images.length - 1);
+      const index = i % images.length;
+      return images[index];
     }
   },
   computed: {

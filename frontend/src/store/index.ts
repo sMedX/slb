@@ -85,13 +85,13 @@ export default new Vuex.Store({
           match = keys.reduce((acc, key) => {
             if (flags[key]) acc++;
             return acc;
-          }, 0) / keys.length;
+          }, 0) / state.attributes.length;
         }
 
         results.push({
           name,
           ...element,
-          __match: match * 100
+          __match: (match * 100).toFixed(0)
         });
       }
 
