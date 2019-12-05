@@ -22,7 +22,6 @@ attributes:
       - ISO-V1[150-325F]
       - ISO-V3[40-195F]
       - ISO-V3[150-350F]
-      - nan
   EXTERNAL_PRESSURE:
     PRESSURE:
       max: 6000.0
@@ -99,7 +98,6 @@ attributes:
       values:
       - HNBR
       - AFLAS
-      - nan
   MATERIAL_O_RING:
     description: O-ring compound
     name: MATERIAL/O-RING(S)
@@ -133,7 +131,6 @@ attributes:
       type: string
       values:
       - Q3
-      - nan
   QCP:
     description: Customer quality control plan
     name: QUALITY CONTROL PLAN - QCP
