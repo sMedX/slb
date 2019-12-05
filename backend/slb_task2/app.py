@@ -15,8 +15,14 @@ import simplejson
 
 
 def get_data():
+
     result = {}
-    ia_df = pd.read_pickle(os.path.join(os.pardir, 'slb_data', 'ia_df.pkl'))
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+
+    path = os.path.join(dir_path, 'ia_df.pkl')
+
+    ia_df = pd.read_pickle(path)
     result['ia_df'] = ia_df
     return result
 

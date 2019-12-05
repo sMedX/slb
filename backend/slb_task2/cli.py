@@ -38,7 +38,6 @@ def build_parser() -> argparse.ArgumentParser:
                         help='Path to configuration file')
     return parser
 
-
 def str2bool(v: str) -> bool:
 
     if isinstance(v, bool):
@@ -56,8 +55,17 @@ def main() -> None:
     config = load_config(args.config)
     config.update(**(vars(args)))
     app = create_app(config=config)
+
     aiohttp.web.run_app(app, host=args.host, port=args.port)
 
+
+def get_app(argv):
+    args = build_parser().parse_args()
+    config = load_config(args.config)
+    config.update(**(vars(args)))
+    app = create_app(config=config)
+
+    return app
 
 if __name__ == '__main__':
     main()
